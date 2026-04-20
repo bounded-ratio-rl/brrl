@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bounded Ratio Reinforcement Learning</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 40px 20px;
+      color: #222;
+    }
+
+    .abstract-list {
+      text-align: left;
+      max-width: 820px;
+      margin: 0 auto;
+      padding-left: 1.25rem;
+      line-height: 1.6;
+      color: #333;
+      list-style-position: outside;
+    }
+
+    .abstract-list li {
+      margin-bottom: 0.6rem;
+    }
+
+    .inline-figure {
+      margin: 18px auto;
+      text-align: center;
+    }
+
+    .inline-figure img {
+      max-width: 100%;
+      width: 720px;   /* optional fixed visual width */
+      height: auto;
+      border-radius: 8px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .inline-figure .caption {
+      margin-top: 8px;
+      font-size: 0.92rem;
+      color: #666;
+    }
+
+     .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      text-align: center;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin: 25px 0;
+    }
+
+    .pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background-color: #111;
+      color: white;
+      text-decoration: none;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      transition: background 0.3s ease;
+    }
+
+    .pill-btn:hover {
+      background-color: #333;
+    }
+
+    .pill-btn img {
+      height: 16px;
+    }
+
+    .pill-btn i {
+      font-size: 14px;
+    }
+    .pill-btn i.fab.fa-github {
+      color: white;
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      margin-bottom: 16px;
+    }
+
+    .authors, .affiliations {
+      font-size: 1rem;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .author-note {
+      font-size: 0.9rem;
+      color: #888;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 6px;
+      margin-top: 50px;
+      margin-bottom: 20px;
+    }
+
+    h3 {
+      font-size: 1.3rem;
+      margin-top: 40px;
+      margin-bottom: 10px;
+      color: #333;
+      text-align: left;
+    }
+
+    /* Center the whole abstract while ensuring left alignment for the last line */
+    .abstract {
+      text-align: center;
+      display: inline-block;
+      width: 100%;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.6;
+      text-align: justify;
+      text-align-last: left;
+      color: #333;
+    }
+
+    .equation-block {
+      text-align: center;
+      margin: 1rem 0;
+    }
+
+    mjx-container[jax="CHTML"][display="true"] {
+      display: block !important;
+      text-align: center !important;
+      margin: 1em auto !important;
+    }
+
+
+      .videos-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+  
+      .video-wrapper {
+      flex: 1 1 45%;
+      max-width: 500px;
+      background: #f1f1f1;
+      padding: 12px;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+  
+      video {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      margin-top: 10px;
+    }
+  
+      /* Video titles */
+      .video-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-top: 10px;
+      text-align: center;
+    }
+     @media (max-width: 768px) {
+      .video-wrapper {
+        flex: 1 1 100%;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<body>
+
+  <div class="container">
+
+    <h1>Bounded Ratio Reinforcement Learning</h1>
+  
+
+    <div class="authors">
+      Yunke Ao<sup>1,3,5</sup>, 
+      Le Chen<sup>2</sup><sup>*</sup>, 
+      Bruce Lee<sup>1,5</sup><sup>*</sup>, 
+      Assefa S. Wahd<sup>4</sup><sup>+</sup>, 
+      Aline Czarnobai<sup>6</sup><sup>+</sup>, 
+      Philipp Fürnstahl<sup>3</sup>, 
+      Bernhard Schölkopf<sup>2</sup>, 
+      Andreas Krause<sup>1,5</sup>, 
+    </div>
+
+    <div class="author-note">
+      <sup>*</sup>Equal second author contribution.
+      <sup>+</sup>Equal third author contribution.
+    </div>
+
+    <div class="affiliations">
+      <sup>1</sup>ETH Zurich &nbsp;·&nbsp;
+      <sup>2</sup>MPI for Intelligent Systems &nbsp;·&nbsp;
+      <sup>3</sup>Balgrist University Hospital &nbsp;·&nbsp;
+      <sup>4</sup>University of Alberta &nbsp;·&nbsp;
+      <sup>5</sup>ETH AI Center &nbsp;·&nbsp;
+      <sup>6</sup>Dartmouth College
+    </div>
+
+    <div class="button-row">
+
+      <!-- arXiv button -->
+      <a class="pill-btn" href="https://arxiv.org/abs/2507.01152" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none;">
+        arXiv
+      </a>
+
+  
+      <!-- GitHub with Octocat -->
+      <a class="pill-btn" href="https://github.com/bounded-ratio-rl/bounded_ratio_rl" >
+        <i class="fab fa-github" style="color: white;"></i>
+        Code
+      </a>
+  
+    </div>
+    <h2>Abstract</h2>
+    <div class="abstract">
+      <ul class="abstract-list">
+          We present <strong>Bounded Ratio RL (BRRL)</strong>, a framework that bridges the gap between the theoretical foundation and practice of deep RL.
+        
+          We formulate a novel regularized policy optimization problem with <strong>bounded ratio constraints</strong>, and derive its <strong>analytical solution</strong>.
+        
+          We prove that this solution guarantees strict monotonic performance improvement.
+        
+          We then develop a simple algorithm, <strong>Bounded Policy Optimization (BPO)</strong>, that minimizes a divergence between the current policy and the analytical solution, and extend it to the settings of LLM fine-tuning as <strong>Group-relative BPO (GBPO)</strong>.
+        
+          We establish a <strong>lower bound</strong> on the expected performance of the resulting policy in terms of our loss function.
+        
+          We interpret the <strong>success of PPO</strong> from a new perspective, and connect BRRL to Cross-Entropy Method (<strong>CEM</strong>).
+        
+          We conduct extensive experiments on MuJoCo, Atari, IsaacLab and LLM fine-tuning tasks, and demonstrate that BPO and GBPO generally match or outperform PPO and GRPO in stability and final performance.
+      </ul>
+    </div>
+
+    <h2>Method Overview</h2>
+    <h3>Bounded Ratio RL Framework</h3>
+
+    <div class="abstract">
+      <p>
+        We consider a policy optimization problem with bounded ratio trust region constraints from an old policy $\pi_0$
+      </p>
+      <div class="equation-block">
+        \[
+        \begin{aligned}
+        \max_{\pi}\,\,\, &\mathbb{E}_{s\sim d_{\pi_0}, a\sim \pi_0}\left[\frac{\pi(a|s)}{\pi_0(a|s)}A_{\pi_0}(s, a)\right],\quad
+        	\\ \text{s.t.}\,\,\,\, &1-\epsilon \leq \frac{\pi(a|s)}{\pi_0(a|s)} \leq 1+\epsilon,\,\,\forall\,s,a.
+          \end{aligned}
+        \]
+      </div>
+      <p>
+        where $A_{\pi_0}(s, a)$ is the advantage function of the old policy $\pi_0$, $d_{\pi_0}$ is the state visitation distribution under the old policy, $1\pm\epsilon$ represents the ratio boundaries, as illustrated in Figure 1.
+      </p>
+      <div class="inline-figure">
+        <img src="images/constraints.svg" alt="Bounded ratio constraints">
+        <div class="caption">Figure 1: Bounded ratio constraints.</div>
+      </div>
+      <p>
+        Notably, this problem has an <strong>analytical optimal solution</strong> $\pi^*$, which in many cases can be derived as
+      </p>
+        <div class="equation-block">\begin{equation}
+          \pi^*(a|s) = [1+\epsilon\cdot\text{sign}(\underbrace{Q_{\pi_0}(s,a) - \mu_{\pi_0}(s)}_{\tilde{A}_{\pi_0}(s,a)})]\cdot\pi_0(a|s)
+          \label{eq:simple_solution}
+      \end{equation}  
+    </div> 
+      <p>
+        where $Q_{\pi_0}(s,a)$ is the action-value function of the old policy $\pi_0$, $\mu_{\pi_0}(s)$ is the <strong>median</strong> of $Q_{\pi_0}(s,a)$ under the old policy, and $\tilde{A}_{\pi_0}(s,a)$ is a median-advantage function.
+      </p>
+      <p>This optimal solution (Figure 2) is straightforward and can be explained as: if $Q_{\pi_0}(s,a)$ is higher than the threshold $\mu_{\pi_0}(s)$, then take the highest probability within the constraint $\pi^*(a|s)=(1+\epsilon)\pi_0(a|s)$; otherwise, let $\pi^*(a|s)=(1-\epsilon)\pi_0(a|s)$.
+      </p>
+     <div class="inline-figure">
+        <img src="images/optimal_solution.svg" alt="optimal solution">
+        <div class="caption">Figure 2: Optimal_solution.</div>
+      </div>
+      <p>
+        The aforementioned optimal policy $\pi^*$ can be shown to have improved expected total reward over $\pi_0$ (detailed in Theorem 4.2 of the paper)
+      </p>
+<div class="equation-block">\begin{equation}
+    \eta(\pi^*) :=\mathbb{E}_{s\sim d_0}[V_{\pi^*}(s)]=\eta(\pi_0) + \epsilon\cdot \underbrace{\mathbb{E}_{s\sim d_{\pi^*},a\sim \pi_0}[\text{sign}(\tilde{A}_{\pi_0})\tilde{A}_{\pi_0}]}_{:=B\geq 0},
+    \tag{1}
+\end{equation}
+</div>
+<p>
+where $d_0$ is the initial state distribution, $V_{\pi^*}$ is the value function of the optimal policy, and the second term $\epsilon B$ is non-negative and is positive whenever $\pi_0$ induces non-zero median advantage. 
+      </p>
+      <p>
+        Note that optimal solution $\pi^*$ and the performance improvement above can also be extended to problems with <strong>asymmetric</strong> bounded ratio constraints ($c_l\leq \pi(a|s)/\pi_0(a|s) \leq c_h$). This asymmetric solution is used to draw a connection to the <strong>cross-entropy method (CEM)</strong> (detailed in the Section 4.6 of the paper). 
+      </p>
+     
+    </div>
+     
+
+
+    <h3>Revisit PPO loss function</h3>
+   
+    <div class="abstract">
+      <p>
+        We observe that the PPO loss function 
+        </p>
+        <div class="equation-block">\begin{equation}
+          l^{PPO}(\rho):=-\min\left\{\text{clip}\left(\rho,1-\epsilon,1+\epsilon\right)\cdot A_{\pi_0}, \rho A_{\pi_0}\right\}
+          \end{equation}
+      </div>
+      <p>
+        approximately drives the policy towards our $\pi^*$.
+        Specifically, as shown in  Figure 3, minimizing the PPO loss is equivalent to minimizing the expectation of the following loss function evaluated at $\rho = \pi(a|s)/\pi_0(a|s)$
+      </p>
+      <div class="equation-block">\begin{equation}
+\begin{split}
+        &l'(\rho ):=\begin{cases}|A_{\pi_0}|\cdot |\rho - \underbrace{(1+\epsilon\cdot\text{sign}(A_{\pi_0}) )}_{\approx \frac{\pi^*(a|s)}{\pi_0(a|s)}}|, & |\rho - 1| \leq \epsilon, \\[2pt]
+0, & |\rho - 1| > \epsilon. \label{eq:ppo_sim_l}
+\end{cases}
+\end{split}
+\end{equation}
+<p>Intuitively, this equivalence follows from the fact that adding or subtracting a constant from the objective function does not change the optimal solution. </p>
+      <p>At the beginning of the iteration, the ratio always starts from 1, and the PPO loss minimizes an <strong> advantage-weighted absolute error </strong> between the ratio $\rho$ and the target $1 + \epsilon\cdot\text{sign}(A_{\pi_0})$, then it applies zero-gradient after reaching the target.
+      </p>
+      </div>
+    <div class="inline-figure">
+        <img src="images/ppo_loss.svg" alt="PPO loss">
+        <div class="caption">Figure 3: PPO Loss Function.</div>
+      </div>
+    <p>Since $\pi^*$ has monotonic performance improvement, the momentum that PPO drives the policy towards $\pi^*$ justifies its effectiveness from a new perspective. </p>
+  </div>
+
+  <h3>Bounded policy optimization (BPO)</h3>
+   
+    <div class="abstract">
+      <p>
+        We introduce a natural PPO variant with the loss function $l^{BPO}$ to directly minimize the <strong>advantage weighted total variation (ATV)</strong> from the optimal solution $\pi^*$, as shown in Figure 4.
+        The resulting loss $l^{BPO}$ evaluated under $\rho = \pi(a|s)/\pi_0(a|s)$ is
+      </p>
+      <div class="equation-block">\begin{equation}
+        l^{BPO}(\rho ):=|A_{\pi_0}|\cdot \left|\rho - \frac{\pi^*(a|s)}{\pi_0(a|s)}\right|=|A_{\pi_0}|\cdot |\rho - (1+ \epsilon\cdot\text{sign}(\tilde{A}_{\pi_0}))|.\label{eq:simple_loss}
+    \end{equation}
+    </div>
+    <p>
+        The loss is illustrated in Figure 4.
+        It minimize the divergence between the admissible policy $\pi \in \Pi$ and $\pi^*$, where $\pi^*$ may not be admissible $\pi^*\notin \Pi$.
+    </p>
+    <div class="inline-figure">
+        <img src="images/bpo_loss.svg" alt="BPO loss">
+        <div class="caption">Figure 4: BPO Loss Function.</div>
+      </div>
+         <p>
+        Compare with the equivalent PPO loss $l'$, this loss function $l^{BPO}$ only differs in two ways:  (1) a symmetric slope also for $|\rho - 1| \geq \epsilon$ and (2) using $\tilde{A}_{\pi_0}$ instead of $A_{\pi_0}$.
+    </p> 
+    <p>Notably, with this refined loss function, BPO has both theoretical performance guarantees.
+   Specifically,  we can express the stepwise improvement in terms of the achieved loss
+  </p>
+  <div class="equation-block">\begin{align*}
+    \eta(\pi) \geq \eta(\pi_0) + \epsilon B - \mathbb{E}_{
+        s\sim d_{\pi_0},
+        a\sim \pi_0}\left[l^{BPO}\left(\frac{\pi(a|s)}{\pi_0(a|s)}\right)\right] - \delta(\pi,\pi^*),
+\end{align*}
+    </div>
+    <p>where $B$ is defined in (1). Here, $\delta(\pi,\pi^*)$ is an error term that is related to $l^{BPO}(\frac{\pi(a|s)}{\pi_0(a|s)})$ and reduces to $0$ if we have perfect policy approximation $\pi=\pi^*$.
+
+This theoretical result directly implies that, if our loss function $l^{BPO}$ is sufficiently minimized over states and actions sampled from $\pi_0$, and if the policy approximation error is small, we can obtain monotonic performance improvement.</p>
+  </div>
+  
+
+<h2>Benchmarking Results</h2>
+ <h3>MuJoCo</h3>
+
+ <div class="abstract">
+      <p>
+        In MuJoCo tasks, BPO achieves clear performance gains in the Ant-v4, Hopper-v4, and Humanoid-v4 environments.
+      </p>
+    </p>
+    <div class="inline-figure">
+        <img src="images/exp_mujoco.svg" alt="BPO loss">
+        <div class="caption">Figure 5: MuJoCo Results.</div>
+      </div>
+    
+  </div>
+
+
+ <h3>Atari</h3>
+
+  <div class="abstract">
+      <p>
+        In Atari benchmarks, BPO generally matches PPO’s performance, notably outperforming it in the Asterix environment. 
+      </p>
+    </p>
+    <div class="inline-figure">
+        <img src="images/exp_atari.svg" alt="BPO loss">
+        <div class="caption">Figure 6: Atari Results.</div>
+      </div>
+    
+  </div>
+
+ <h3>NVIDIA IsaacLab</h3>
+
+   <div class="abstract">
+      <p>
+        BPO is highly effective in complex robotic locomotion tasks. 
+In particular, on G1-rough, BPO significantly outperforms the baseline to reach a higher performance ceiling. 
+For the Go1-rough and H1-rough environment, BPO also slightly exceeds the final performance of PPO. 
+Notably, across all four benchmarks, BPO exhibits enhanced training stability and smoother dynamics compared to the PPO baseline.  
+      </p>
+    </p>
+    <div class="inline-figure">
+        <img src="images/exp_isaaclab.svg" alt="BPO loss">
+        <div class="caption">Figure 7: IsaacLab Results.</div>
+      </div>
+    
+  </div>
+
+  <h3>TTRL</h3>
+  <div class="abstract">
+      <p>
+       We conduct experiments in the Test-Time Reinforcement Learning (TTRL) framework, fine-tuning the Qwen2.5-Math-1.5B model with GBPO and GRPO on the AIME-TTT and AMC-TTT benchmarks, and then compare their reasoning performance.
+       The empirical results, illustrated in Figure~8, reveal that GBPO can maintain performance gains as the number of training epochs and clip ratio increase. 
+Conversely, GRPO exhibits instability under these conditions.
+These findings highlight GBPO’s potential as a more robust and stable alternative for the fine-tuning of large-scale models.
+      </p>
+    </p>
+    <div class="inline-figure">
+        <img src="images/exp_ttrl.svg" alt="BPO loss">
+        <div class="caption">Figure 8: TTRL Results.</div>
+      </div>
+    
+  </div>
+
+
+</body>
+</html>
