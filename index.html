@@ -244,7 +244,7 @@
 
       <!-- arXiv button -->
       <a class="pill-btn" href="https://arxiv.org/abs/2507.01152" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none;">
-        arXiv
+        arXiv paper
       </a>
 
   
@@ -279,7 +279,7 @@
 
     <div class="abstract">
       <p>
-        We consider a policy optimization problem with bounded ratio trust region constraints from an old policy $\pi_0$
+        We consider a policy optimization problem with <strong>bounded ratio</strong> trust region constraints from an old policy $\pi_0$
       </p>
       <div class="equation-block">
         \[
@@ -314,7 +314,7 @@
         <div class="caption">Figure 2: Optimal_solution.</div>
       </div>
       <p>
-        The aforementioned optimal policy $\pi^*$ can be shown to have improved expected total reward over $\pi_0$ (detailed in Theorem 4.2 of the paper)
+        The aforementioned optimal policy $\pi^*$ can be shown to have <strong>improved</strong> expected total reward over $\pi_0$ (detailed in Theorem 4.2 of the paper)
       </p>
 <div class="equation-block">\begin{equation}
     \eta(\pi^*) :=\mathbb{E}_{s\sim d_0}[V_{\pi^*}(s)]=\eta(\pi_0) + \epsilon\cdot \underbrace{\mathbb{E}_{s\sim d_{\pi^*},a\sim \pi_0}[\text{sign}(\tilde{A}_{\pi_0})\tilde{A}_{\pi_0}]}_{:=B\geq 0},
@@ -343,7 +343,7 @@ where $d_0$ is the initial state distribution, $V_{\pi^*}$ is the value function
           \end{equation}
       </div>
       <p>
-        approximately drives the policy towards our $\pi^*$.
+        <strong>approximately drives the policy towards our $\pi^*$.</strong>
         Specifically, as shown in  Figure 3, minimizing the PPO loss is equivalent to minimizing the expectation of the following loss function evaluated at $\rho = \pi(a|s)/\pi_0(a|s)$
       </p>
       <div class="equation-block">\begin{equation}
@@ -355,6 +355,7 @@ where $d_0$ is the initial state distribution, $V_{\pi^*}$ is the value function
 \end{equation}
 <p>Intuitively, this equivalence follows from the fact that adding or subtracting a constant from the objective function does not change the optimal solution. </p>
       <p>At the beginning of the iteration, the ratio always starts from 1, and the PPO loss minimizes an <strong> advantage-weighted absolute error </strong> between the ratio $\rho$ and the target $1 + \epsilon\cdot\text{sign}(A_{\pi_0})$, then it applies zero-gradient after reaching the target.
+        The only difference between this target and the optimal solution $\pi^*$ is that PPO uses $A_{\pi_0}$ instead of $\tilde{A}_{\pi_0}$.
       </p>
       </div>
     <div class="inline-figure">
@@ -386,8 +387,8 @@ where $d_0$ is the initial state distribution, $V_{\pi^*}$ is the value function
          <p>
         Compare with the equivalent PPO loss $l'$, this loss function $l^{BPO}$ only differs in two ways:  (1) a symmetric slope also for $|\rho - 1| \geq \epsilon$ and (2) using $\tilde{A}_{\pi_0}$ instead of $A_{\pi_0}$.
     </p> 
-    <p>Notably, with this refined loss function, BPO has both theoretical performance guarantees.
-   Specifically,  we can express the stepwise improvement in terms of the achieved loss
+    <p>Notably, with this refined loss function, BPO has both <strong>theoretical performance guarantees</strong> and <strong>empirical effectiveness</strong>.
+   Specifically,  we can express the stepwise improvement in terms of the achieved loss (detailed in Corollary 4.5 of the paper)
   </p>
   <div class="equation-block">\begin{align*}
     \eta(\pi) \geq \eta(\pi_0) + \epsilon B - \mathbb{E}_{
