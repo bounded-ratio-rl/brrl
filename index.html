@@ -100,13 +100,13 @@
     }
 
     .authors, .affiliations {
-      font-size: 1rem;
+      font-size: 0.9rem;
       color: #555;
       margin-bottom: 10px;
     }
 
     .author-note {
-      font-size: 0.9rem;
+      font-size: 0.8rem;
       color: #888;
       margin-bottom: 20px;
     }
@@ -198,6 +198,41 @@
         font-size: 1.5rem;
       }
     }
+    .citation-container {
+        background-color: #f4f4f4;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        position: relative;
+        font-size: 14px;
+        text-align: left;
+      }
+
+      .citation-container pre {
+        margin: 0;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        font-family: 'Courier New', Courier, monospace;
+        color: #333;
+        text-align: left;
+      }
+
+      .copy-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 5px 12px;
+        background-color: #ffffff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        transition: background 0.2s;
+      }
+
+.copy-btn:hover {
+  background-color: #e2e2e2;
+}
   </style>
 </head>
 
@@ -214,7 +249,26 @@
 
     <h1>Bounded Ratio Reinforcement Learning</h1>
   
+    <div class="abstract">
+      <ul class="abstract-list">
+          <strong>TLDR;</strong> A new RL framework that interprets the success of PPO from a new perspective, relates to cross-entropy method, and leads to a simple algorithm with theoretical guarantees and strong empirical performance.
+      </ul>
+    </div>
+    <div class="button-row">
 
+      <!-- arXiv button -->
+      <a class="pill-btn" href="https://arxiv.org/abs/2604.18578" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none;">
+        arXiv paper
+      </a>
+
+  
+      <!-- GitHub with Octocat -->
+      <a class="pill-btn" href="https://github.com/bounded-ratio-rl/bounded_ratio_rl" >
+        <i class="fab fa-github" style="color: white;"></i>
+        Code
+      </a>
+  
+    </div>
     <div class="authors">
       Yunke Ao<sup>1,3,5</sup>, 
       Le Chen<sup>2</sup><sup>*</sup>, 
@@ -240,21 +294,7 @@
       <sup>6</sup>Dartmouth College
     </div>
 
-    <div class="button-row">
-
-      <!-- arXiv button -->
-      <a class="pill-btn" href="https://arxiv.org/abs/2507.01152" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none;">
-        arXiv paper
-      </a>
-
-  
-      <!-- GitHub with Octocat -->
-      <a class="pill-btn" href="https://github.com/bounded-ratio-rl/bounded_ratio_rl" >
-        <i class="fab fa-github" style="color: white;"></i>
-        Code
-      </a>
-  
-    </div>
+    
     <h2>Abstract</h2>
     <div class="abstract">
       <ul class="abstract-list">
@@ -464,6 +504,22 @@ These findings highlight GBPO’s potential as a more robust and stable alternat
       </div>
     
   </div>
+
+  <section id="citation" style="max-width: 800px; margin: 20px auto; padding: 0 20px;">
+  <h2 style="font-family: sans-serif;">Citation</h2>
+  <div class="citation-container">
+    <pre id="bibtex-code"><code>@misc{ao2026boundedratioreinforcementlearning,
+      title={Bounded Ratio Reinforcement Learning}, 
+      author={Yunke Ao and Le Chen and Bruce D. Lee and Assefa S. Wahd and Aline Czarnobai and Philipp Fürnstahl and Bernhard Schölkopf and Andreas Krause},
+      year={2026},
+      eprint={2604.18578},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2604.18578}, 
+}</code></pre>
+    <button class="copy-btn" onclick="copyBibtex()">Copy to Clipboard</button>
+  </div>
+</section>
 
 
 </body>
