@@ -257,10 +257,12 @@
     <div class="button-row">
 
       <!-- arXiv button -->
-      <a class="pill-btn" href="https://arxiv.org/abs/2604.18578" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none;">
-        arXiv paper
+      <a class="pill-btn" href="https://arxiv.org/abs/2604.18578" target="_blank">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>
+        </svg>
+        <span>arXiv paper</span>
       </a>
-
   
       <!-- GitHub with Octocat -->
       <a class="pill-btn" href="https://github.com/bounded-ratio-rl/bounded_ratio_rl" >
@@ -270,14 +272,14 @@
   
     </div>
     <div class="authors">
-      Yunke Ao<sup>1,3,5</sup>, 
+      Yunke Ao<sup>1,3,6</sup>, 
       Le Chen<sup>2</sup><sup>*</sup>, 
-      Bruce Lee<sup>1,5</sup><sup>*</sup>, 
+      Bruce Lee<sup>1,6</sup><sup>*</sup>, 
       Assefa S. Wahd<sup>4</sup><sup>+</sup>, 
-      Aline Czarnobai<sup>6</sup><sup>+</sup>, 
+      Aline Czarnobai<sup>5</sup><sup>+</sup>, 
       Philipp Fürnstahl<sup>3</sup>, 
       Bernhard Schölkopf<sup>2</sup>, 
-      Andreas Krause<sup>1,5</sup>, 
+      Andreas Krause<sup>1,6</sup>, 
     </div>
 
     <div class="author-note">
@@ -290,8 +292,8 @@
       <sup>2</sup>MPI for Intelligent Systems &nbsp;·&nbsp;
       <sup>3</sup>Balgrist University Hospital &nbsp;·&nbsp;
       <sup>4</sup>University of Alberta &nbsp;·&nbsp;
-      <sup>5</sup>ETH AI Center &nbsp;·&nbsp;
-      <sup>6</sup>Dartmouth College
+      <sup>5</sup>Dartmouth College &nbsp;·&nbsp;
+      <sup>6</sup>ETH AI Center 
     </div>
 
     
@@ -493,13 +495,13 @@ Notably, across all four benchmarks, BPO exhibits enhanced training stability an
   <div class="abstract">
       <p>
        We conduct experiments in the Test-Time Reinforcement Learning (TTRL) framework, fine-tuning the Qwen2.5-Math-1.5B model with GBPO and GRPO on the AIME-TTT and AMC-TTT benchmarks, and then compare their reasoning performance.
-       The empirical results, illustrated in Figure~8, reveal that GBPO can maintain performance gains as the number of training epochs and clip ratio increase. 
+       The empirical results, illustrated in Figure 8, reveal that GBPO can maintain performance gains as the number of training epochs and clip ratio increase. 
 Conversely, GRPO exhibits instability under these conditions.
 These findings highlight GBPO’s potential as a more robust and stable alternative for the fine-tuning of large-scale models.
       </p>
     </p>
     <div class="inline-figure">
-        <img src="images/exp_ttrl.svg" alt="BPO loss">
+        <img src="images/exp_TTRL.svg" alt="BPO loss">
         <div class="caption">Figure 8: TTRL Results.</div>
       </div>
     
